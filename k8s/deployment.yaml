@@ -18,4 +18,4 @@ spec:
         - name: flask-app
           image: eshedortal/flask-app:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 5000
