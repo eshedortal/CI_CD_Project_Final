@@ -5,4 +5,4 @@ persistence:
 
 service:
   type: LoadBalancer  
-  externalPort: 9000  
+  externalPort: 5000 
