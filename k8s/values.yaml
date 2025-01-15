@@ -1,8 +1,0 @@
-persistence:
-  enabled: true  
-  storageClass: "standard" 
-  size: 10Gi  
-
-service:
-  type: LoadBalancer  
-  externalPort: 5000 
