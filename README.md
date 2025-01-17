@@ -59,7 +59,7 @@ The ArgoCD setup monitors the repository for changes in the YAML file that descr
 
 You will need to create a new ArgoCD application that points to this repository and the `k8s/deployment.yml` file.
 
-## Example of Configuration:
+#### Example of Configuration:
 
 **Step 1: Install ArgoCD on Kubernetes**
 - Create the 'argocd' namespace, Install ArgoCD and verify the installation:
