@@ -85,7 +85,7 @@ You will need to create a new ArgoCD application that points to this repository 
   ```bash
   argocd repo add https://github.com/eshedortal/CI_CD_Workflow_GitHub_ArgoCD --username <GITHUB_USERNAME> --password <GITHUB_PERSONAL_ACCESS_TOKEN>
 - Replace:
-    - `<GITHUB_USERNAME>` and `<GITHUB_PERSONAL_ACCESS_TOKEN>` with your GitHub Credentials
+    - `<GITHUB_USERNAME>` and `<GITHUB_PERSONAL_ACCESS_TOKEN>` with your GitHub Credentials.
 
 **Step 5: Create an ArgoCD Application**
 - Create an application via CLI:
@@ -103,6 +103,7 @@ You will need to create a new ArgoCD application that points to this repository 
 - Check the application's status:
   ```bash
   argocd app get my-app
+- Optionally expose the application externally using a Kubernetes service or ingress.
 
 ## How to Use
 
