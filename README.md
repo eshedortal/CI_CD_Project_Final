@@ -22,7 +22,7 @@ This project demonstrates a complete CI/CD pipeline setup using **GitHub Actions
 - Docker Hub account and repository for storing Docker images --> [DockerDocs - Repositories](https://docs.docker.com/docker-hub/repos/create/)
 - Kubernetes cluster (In this instance Kind was used) --> [Kind - Quick Guide](https://kind.sigs.k8s.io/)
 - ArgoCD installed and configured in the Kubernetes cluster --> [ArgoCD - Overview](https://argo-cd.readthedocs.io/en/stable/)
-- GitHub repository --> [GitHub Docks - Repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories)
+- GitHub repository --> [GitHub Docs - Repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories)
 - GitHub Actions configured --> [GitHub Docs - GitHub Actions](https://docs.github.com/en/actions/writing-workflows/quickstart)
 
 ## Workflow Overview
@@ -58,6 +58,49 @@ The ArgoCD setup monitors the repository for changes in the YAML file that descr
 ### ArgoCD Application Configuration
 
 You will need to create a new ArgoCD application that points to this repository and the `k8s/deployment.yml` file.
+
+## Example of Configuration:
+
+**Step 1: Install ArgoCD on Kubernetes**
+- Create the 'argocd' namespace, Install ArgoCD and verify the installation:
+  ```bash
+  kubectl create namespace argocd
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  kubectl get pods -n argocd
+
+**Step 2: Expose the ArgoCD Server**
+- Patch the service for external access and get the ArgoCD server URL
+  ```bash
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+  kubectl get svc argocd-server -n argocd
+
+**Step 3: Log in to ArgoCD**
+- Fetch the initial admin password and log in to ARGOCD CLI:
+  ```bash
+  kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
+  argocd login <ARGOCD_SERVER_URL>
+
+**Step 4: Connect a GitHub Repository**
+- Add your GitHub repository to ArgoCD:
+  ```bash
+  argocd repo add https://github.com/eshedortal/CI_CD_Workflow_GitHub_ArgoCD --username <GITHUB_USERNAME> --password <GITHUB_PERSONAL_ACCESS_TOKEN>
+
+**Step 5: Create an ArgoCD Application**
+- Create an application via CLI:
+  ```bash
+  argocd app create my-app \
+  --repo https://github.com/eshedortal/CI_CD_Workflow_GitHub_ArgoCD \
+  --path k8s \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace default
+- Synchronize the application:
+  ```bash
+  argocd app sync my-app
+
+**Step 6: Access the Application**
+- Check the application's status:
+  ```bash
+  argocd app get my-app
 
 ## How to Use
 
