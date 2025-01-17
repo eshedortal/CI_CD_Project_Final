@@ -33,6 +33,7 @@ The GitHub Actions workflow is triggered every time a new commit is pushed to th
 
 - Runs tests on the new code.
 - Builds a Docker image.
+- Labels the Docker image.
 - Pushes the Docker image to Docker Hub.
 
 ## CD with ArgoCD
@@ -45,7 +46,7 @@ Located in `.github/workflows/ci.yml`, this workflow includes the following step
 
 - **Test**: Run unit tests on the pushed code.
 - **Build Docker Image**: Build a new Docker image based on the code in the repository.
-- **Labels the Docker Image**: Labels the newly created image
+- **Labels the Docker Image**: Labels the newly created image.
 - **Push to Docker Hub**: Upload the built Docker image to Docker Hub.
 
 ### CD with ArgoCD
