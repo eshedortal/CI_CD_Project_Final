@@ -22,6 +22,7 @@ This project demonstrates a complete CI/CD pipeline setup using **GitHub Actions
 - Docker Hub account and repository for storing Docker images --> [DockerDocs - Repositories](https://docs.docker.com/docker-hub/repos/create/)
 - Kubernetes cluster (In this instance Kind was used) --> [Kind - Quick Guide](https://kind.sigs.k8s.io/)
 - ArgoCD installed and configured in the Kubernetes cluster --> [ArgoCD - Overview](https://argo-cd.readthedocs.io/en/stable/)
+- Python 3.12: Require to run Flask application locally and in the container --> [Python 3.12.0](https://www.python.org/downloads/release/python-3120/)
 - GitHub repository --> [GitHub Docs - Repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories)
 - GitHub Actions configured --> [GitHub Docs - GitHub Actions](https://docs.github.com/en/actions/writing-workflows/quickstart)
 
