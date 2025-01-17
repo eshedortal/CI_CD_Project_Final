@@ -100,10 +100,10 @@ You will need to create a new ArgoCD application that points to this repository 
 **Port Forward the Flask Application**
 - Forward a local port to the service port of your Flask application:
   ```bash
-  kubectl port-forward svc/flask-app 5001:5000
+  kubectl port-forward svc/flask-app 5000:5000
 
 **Access the Flask Application**
-- Open your web browser and navigate to http://localhost:5001 to view the running Flask application.
+- Open your web browser and navigate to http://localhost:5000 to view the running Flask application.
 
 ## How to Use
 
