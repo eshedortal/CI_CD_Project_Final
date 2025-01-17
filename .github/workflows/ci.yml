@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          python -m unittest discover -s . -p "test*.py"
+          python -m unittest discover -s src -p "test*.py"
 
   build-and-push:
     name: Build and Push Docker Image
