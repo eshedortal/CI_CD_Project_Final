@@ -63,11 +63,10 @@ You will need to create a new ArgoCD application that points to this repository 
 #### Example of Configuration:
 
 **Step 1: Install ArgoCD on Kubernetes**
-- Create the 'argocd' namespace, Install ArgoCD and verify the installation:
+- Create the `argocd` namespace, Install ArgoCD:
   ```bash
   kubectl create namespace argocd
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  kubectl get pods -n argocd
 
 **Step 2: Expose the ArgoCD Server**
 - Patch the service for external access and get the ArgoCD server URL
@@ -75,36 +74,35 @@ You will need to create a new ArgoCD application that points to this repository 
   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
   kubectl get svc argocd-server -n argocd
 
-**Step 3: Log in to ArgoCD**
-- Fetch the initial admin password and log in to ARGOCD CLI:
+**Step 3: Log in to ArgoCD UI**
+- Port forward the ArgoCD server:
+  ```bash
+  kubectl port-forward svc/argocd-server -n argocd 8080:443
+- Open a web browser and navigate to https://localhost:8080.
+- Log in with the default username admin and retrieve the password:
   ```bash
   kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
-  argocd login <ARGOCD_SERVER_URL>
+ 
 
-**Step 4: Connect a GitHub Repository**
-- Add your GitHub repository to ArgoCD:
+**Deploy the Application using ArgoCD UI**
+- In the Argo CD web UI, create a new application with the following settings:
+    - Application Name: flask-app
+    - Project: default
+    - Sync Policy: Automatic
+    - Repository URL: https://github.com/eshedortal/CI_CD_Workflow_GitHub_ArgoCD
+    - Revision: main
+    - Path: k8s
+    - Cluster URL: https://kubernetes.default.svc
+    - Namespace: default
+    - Click *Create* and then *Sync* to deploy the application.
+ 
+**Port Forward the Flask Application**
+- Forward a local port to the service port of your Flask application:
   ```bash
-  argocd repo add https://github.com/eshedortal/CI_CD_Workflow_GitHub_ArgoCD --username <GITHUB_USERNAME> --password <GITHUB_PERSONAL_ACCESS_TOKEN>
-- Replace:
-    - `<GITHUB_USERNAME>` and `<GITHUB_PERSONAL_ACCESS_TOKEN>` with your GitHub Credentials.
+  kubectl port-forward svc/flask-app 5001:5000
 
-**Step 5: Create an ArgoCD Application**
-- Create an application via CLI:
-  ```bash
-  argocd app create my-app \
-  --repo https://github.com/eshedortal/CI_CD_Workflow_GitHub_ArgoCD \
-  --path k8s \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace default
-- Synchronize the application:
-  ```bash
-  argocd app sync my-app
-
-**Step 6: Access the Application**
-- Check the application's status:
-  ```bash
-  argocd app get my-app
-- Optionally expose the application externally using a Kubernetes service or ingress.
+**Access the Flask Application**
+- Open your web browser and navigate to http://localhost:5001 to view the running Flask application.
 
 ## How to Use
 
